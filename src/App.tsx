@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
+import { Breadcrumb, Layout } from 'antd';
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons';
+import { Footer } from 'antd/lib/layout/layout';
+import SideBarPos from './component/Sidebar/SidebarPos'
+const { Header, Sider, Content } = Layout;
 function App() {
+  const [collapsed,setCollapsed] = useState<boolean>(false);
+  const toggle = ():void => {
+      setCollapsed(!collapsed)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout style={{height:"100vh"}}>
+    <Sider trigger={null} collapsible collapsed={collapsed}>
+       <SideBarPos />
+    </Sider>
+    <Layout className="site-layout">
+     <Header className="site-layout-background" style={{ padding: 0 }}>
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+          className: 'trigger',
+          onClick: toggle,
+        })}
+      </Header>
+      <Content style={{ margin: '0 16px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          {/* <Breadcrumb.Item>User</Breadcrumb.Item>
+          <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
+        </Breadcrumb>
+        <div  className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+           First
+        </div>
+      </Content>
+      <Footer  style={{ textAlign: 'center',background:'#001529' }}>Autofast</Footer>
+    </Layout>
+  </Layout>
   );
 }
 
